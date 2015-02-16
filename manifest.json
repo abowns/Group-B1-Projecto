@@ -1,0 +1,20 @@
+{
+  "name": "Annual Snowfall Data",
+  "description": "This chrome packaged app visualizes annual snowfall data",
+  "version": "1.0",
+  "manifest_version": 2,	
+  "permissions":[
+      "http://api.nytimes.com/",
+      "https://maps.google.com/*",
+      "https://maps.googleapis.com/*"
+  ],
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  },
+  "sandbox": {
+    "pages" : ["snowParty.html"]
+  }
+
+}
