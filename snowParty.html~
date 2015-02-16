@@ -13,7 +13,7 @@
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
 
-    <script src="./JS/view-controller.js"></script>
+    <script src="./Snow\ Data/JS/view-controller.js"></script>
 
   </head>
   <body>
