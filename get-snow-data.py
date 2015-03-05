@@ -57,7 +57,7 @@ for i in range(0,16):
 	
 		  # Provide helpful message to user as the loop boldly executes forth.
 		  print ("writing: ")
-		  print (region + "-" + resort + "-" + y)
+		  print (regions[i] + "-" + resorts[i] + "-" + str(y))
 		  print (snowfall + "\n\n\n") 
 	
 		  # Write timestamp and temperature to file                                                                                                    
