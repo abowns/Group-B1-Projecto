@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Growing Code</title>
+
+   <link rel="stylesheet" type="text/css" href="./CSS/format-controller.css"></link>
+
+</head>
+<body>
+
+  <div id="viz">
+
+    <div class="half">
+      <iframe id="map" src="map.html"></iframe>
+    </div>
+    <div class="half" id="events">Events</div>
+
+  </div>
+
+</body>
+</html>
