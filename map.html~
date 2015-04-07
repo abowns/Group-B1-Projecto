@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<!--map.html
+    
+    Creates a single, self-contained html file for the Google Map used
+    in the app.  The google api is not loaded inline and the map is
+    placed in the main app window, window.html, using an iframe.  Finally,
+    map.html is added to the "sandbox" portion of the app manifest.  All
+    of these steps are necessary to comply with the Content Security
+    Policy, CSP, of Google Chrome Apps.
+    @author: Alex Bowns
+    @since: February 2015
+-->
+
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="./CSS/format-controller.css"></link>
+
+    </style>
+   
+
+    <script type="text/javascript">
+      
+    //load google maps API
+    function loadScript() {
+    var key = "AIzaSyDYSTO3iSnVmPyyo1Nvu0rjyFrI2Q-yyeM"
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = "https://maps.googleapis.com/maps/api/js?key=" + key + "&callback=initialize";
+    document.body.appendChild(script);
+}
+
+// Create a map centered at Portland.
+function initialize() {
+        var mapOptions = {
+            center: {
+                lat: 45.5200,
+                lng: -122.6819
+            },
+            zoom: 7
+        };
+        var map = new google.maps.Map(document.getElementById('map-canvas'),
+            mapOptions);
+
+        setMarkers(map, mountains);
+    }//initialize()
+
+//store the different mountains, their coordinates and a z value (used for overlapping icons)
+//[mtn name, N coordinate, W coordinate, z value]
+var mountains = [
+    ['Vail, CO', 39.6358, -106.3631, 1],
+    ['Breckenridge, CO', 39.4996, -106.0433, 2],
+    ['Mt-Hood, OR', 45.3289, -121.6625, 3],
+    ['Mt-Baker, WA', 48.8620, -121.6540, 4],
+    ['Whistler-Blackcomb, BC', 50.1083, -122.9425, 5],
+    [‘Alpe d
+];
+
+function setMarkers(map, locations) {
+
+    //upload a custom (snowflake) map icon
+    var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+    var image = {
+        url: iconBase + 'snowflake_simple.png',
+        size: new google.maps.Size(64, 64),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(0, 64)
+    };
+
+
+    var shape = {
+        cords: [1, 1, 1, 20, 18, 20, 18, 1],
+        type: 'poly'
+    };
+
+    for (var i = 0; i < locations.length; i++) {
+        var mtn = locations[i];
+        var myLatLng = new google.maps.LatLng(mtn[1], mtn[2]);
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            icon: image,
+            shape: shape,
+            title: mtn[0],
+            zIndex: mtn[3]
+        });
+    }
+}
+
+window.onload = loadScript;
+//window.onload = initialize;
+
+// Set up message event handler:
+window.addEventListener('message', function(event) {
+    var command = event.data.command;
+    console.log("Event: ");
+    console.log(command);
+});
+    </script>
+  </head>
+  <body>
+    <div id="map-canvas"></div>
+  </body>
+</html>

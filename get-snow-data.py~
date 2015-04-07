@@ -30,14 +30,16 @@ regions = ['colorado', 'colorado', 'oregon', 'washington', 'british-columbia',
 'eastern-norway', 'utah', 'alaska', 'chile', 'argentina',
 'graubunden']
 # Open a file to store the .csv data in.                                                                                                              
-f = open("/Users/alexbowns/Documents/UP Junior/Group-B1-Projecto/data/onthesnow-data.txt", 'w')
+f = open("/Users/alexbowns/Documents/UP Junior/Group-B1-Projecto/onthesnow-data.txt", 'w')
 
 for i in range(0,16):
 
 	## Loop over all the months                                                                                                                           
 	for y in range(2006, 2015):
        
-   		  # url = "http://www.onthesnow.com/" + region + "/" + resort + "/historical-snowfall.html?&y=" + y
+   
+		  # Open wunderground.com url for 2009 in this particular iteration.                                                                              
+		  # url = "http://www.onthesnow.com/" + region + "/" + resort + "/historical-snowfall.html?&y=" + y
 		  url = "http://www.onthesnow.com/" + regions[i] + "/" + resorts[i] + "/historical-snowfall.html?&y=" + str(y)
 		  #Provide helpful message to user as the loop boldly executes forth.
 		  print ("opening: ")
