@@ -1,20 +1,62 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
-<title>Growing Code</title>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+    google.load('visualization', '1.1', {packages: ['line']});
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Year');
+      data.addColumn('number', 'Mt. Hood Meadows, Oregon, USA');
+      
+
+      data.addRows([
+        ["2006",  462],
+        ["2007",  327],
+        ["2008",  652],
+        ["2009",  474],
+        ["2010",  381],
+        ["2011",   362],
+        ["2012",   651],
+        ["2013",  246],
+        ["2014",  405]
+    ]);
+
+      var options = {
+        chart: {
+          title: 'Annual Snowfall Totals',
+          subtitle: 'in millions of dollars (USD)'
+        },
+    legend: {position: 'bottom' }
+        //width: 900,
+        //height: 500
+      };
+
+      var chart = new google.charts.Line(document.getElementById('linechart_material'));
+
+      chart.draw(data, options);
+    }
+  </script>
+<title>Annual Snowfall Data</title>
 
    <link rel="stylesheet" type="text/css" href="./CSS/format-controller.css"></link>
-   <script src ="./JSFiles/data-controller.js"></script>
-   <script src ="./JSFiles/ui.js"></script>
+<!--   <script src ="./JSFiles/data-controller.js"></script> -->
+<!--   <script src ="./JSFiles/ui.js"></script> -->
 </head>
 <body>
-
+  <div id="top">
+    <h1>Annual Snowfall Data</h1>
+    <h6>By: Alex Bowns, Ben Forsee, and Keegan Symmes</h6>
+  </div>
   <div id="viz">
 
     <div class="half">
       <iframe id="map" src="map.html"></iframe>
     </div>
-    <div class="half" id="events">Events</div>
+    <div class="half" id="linechart_material"></div>
 
   </div>
 

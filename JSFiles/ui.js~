@@ -3,13 +3,13 @@
  */
 
 // Extend namespaces
-var snowy = snowy || {};
-snowy.ui = {};
+var librs = librs || {};
+librs.ui = {};
 
 // The intention of this approach is to be framework-agnostic
 // and to avoid namespace pollution by encapsulating the contents of 
 // this module in a function:
-snowy.ui = function() {
+librs.ui = function() {
     
     // ************************************************************************
     // Methods local to this module.
@@ -18,7 +18,7 @@ snowy.ui = function() {
     // ************************************************************************
     // Methods provided by this module, visible via the namespace.
     // ************************************************************************
-    snowy.ui.listEvents = function(list, num) {
+    librs.ui.listEvents = function(list, num) {
 
 	// Get ready to make a list of unordered elements
 	var createUl = document.createElement("UL");
@@ -55,4 +55,4 @@ snowy.ui = function() {
 }; // end module                                                 
 
 // Invoke module.                                                               
-snowy.ui();
+librs.ui();
