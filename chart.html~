@@ -5,7 +5,9 @@
   <script type="text/javascript">
     google.load('visualization', '1.1', {packages: ['line']});
     google.setOnLoadCallback(drawChart);
-
+     var key = "AIzaSyDYSTO3iSnVmPyyo1Nvu0rjyFrI2Q-yyeM"
+    var script = document.createElement('script');
+     script.src = "https://maps.googleapis.com/maps/api/js?key=" + key + "&callback=initialize";
     function drawChart() {
 
       var data = new google.visualization.DataTable();
@@ -40,25 +42,8 @@
       chart.draw(data, options);
     }
   </script>
-<title>Annual Snowfall Data</title>
 
-   <link rel="stylesheet" type="text/css" href="./CSS/format-controller.css"></link>
-<!--   <script src ="./JSFiles/data-controller.js"></script> -->
-<!--   <script src ="./JSFiles/ui.js"></script> -->
-</head>
-<body>
-  <div id="top">
-    <h1>Annual Snowfall Data</h1>
-    <h6>By: Alex Bowns, Ben Forsee, and Keegan Symmes</h6>
-  </div>
-  <div id="viz">
-
-    <div class="half">
-      <iframe id="map" src="map.html"></iframe>
-    </div>
-    <div class="half" id="linechart_material"></div>
-
-  </div>
-
-</body>
+  <body>
+    <div id=“linechart-material”></div>
+  </body>
 </html>
