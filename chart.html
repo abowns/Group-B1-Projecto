@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+   <script type="text/javascript" src="JSFiles/data-controller.js"></script>
+ 
+
+    <title>Snowfall</title>
+</head>
+
+    <body style="font-family: 'Open Sans', san-serif ; height: 100%; border: 0 none;">
+
+    	<div class="container"  ng-controller="DropDownController">
+	
+	
+	<div class="row">
+	    <div class="col-md-12">
+              <h1>Annual Snowfall Data<small>A practice page to test out our chart pulling</small> </h1>
+	      </div>
+	</div>
+
+	<div google-chart chart="chartObject"></div>
+
+	<div class="row" style="margin-top: 20px">
+	  <div class="col-md-3">
+	    <div class="input-group">
+	      <span class="input-group-btn">
+	        <input type="text" class="form-control" ng-model="resort">
+ 		<button class="btn btn-default" type="button" ng-model="resort" ng-disabled="resort<0" ng-click="minus()"><</button>
+		<button class="btn btn-default" type="button" ng-model="resort" ng-disabled="resort>15" ng-click="plus()">></button>
+		<select name='select_mtn' ng-model="selectedItem" ng-options="item for item in items"></select>
+		<button class="btn btn-default" type="button" ng-model="resort" ng-click="switch()">Go!</button>
+	      </span>
+	      </div><!-- /input-group -->
+	    </div>
+	  </div><!-- /.row -->
+	  
+
+     <div class="row">
+       <div class="cold-md-12">
+	 <div id="visualization_div" style="height: 50%; width: 70%;"></div>
+       </div>
+    </div>
+	 
+
+</body>
+</html>
