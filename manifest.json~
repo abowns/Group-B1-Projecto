@@ -4,7 +4,6 @@
   "version": "1.0",
   "manifest_version": 2,	
   "permissions":[
-      "http://api.nytimes.com/",
       "https://maps.google.com/*",
       "https://maps.googleapis.com/*"
   ],
@@ -14,7 +13,7 @@
     }
   },
   "sandbox": {
-    "pages" : ["snowParty.html"]
+    "pages" : ["map.html"]
   }
 
 }

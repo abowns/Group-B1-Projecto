@@ -36,7 +36,7 @@ function initialize() {
                 lat: 45.5200,
                 lng: -122.6819
             },
-            zoom: 7
+            zoom: 4
         };
         var map = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions);
@@ -52,11 +52,23 @@ var mountains = [
     ['Mt-Hood, OR', 45.3289, -121.6625, 3],
     ['Mt-Baker, WA', 48.8620, -121.6540, 4],
     ['Whistler-Blackcomb, BC', 50.1083, -122.9425, 5],
-    [‘Alpe d
+    ["Alpe d'Huez, France", 45.0603, 6.0714, 6],
+    ['Heavenly, CA', 38.9353, -119.9400, 7],
+    ['Whakapapa, New Zealand', -40.8167, 175.55, 8],
+    ['Killington, VT', 43.6647, -72.7933, 9],
+    ['Klosters, Switzerland', 46.8833, 9.883, 10],
+    ['Geilo, Norway', 60.5167, 8.2000, 11],
+    ['Alta, UT', 40.5808, -111.6372, 12],
+    ['Alyeska, AK', 60.9705, -149.0982, 13], 
+    ['Valle Nevado, Chile', -33.3547, -70.2498, 14],
+    ['Las Lenas, Argentina', -35.1500, -70.0833, 15],
+    ['Laax, Switzerland', 46.8000, 9.2500, 16]
 ];
 
-function setMarkers(map, locations) {
 
+// adds markers to the map
+
+function setMarkers(map, locations) {
     //upload a custom (snowflake) map icon
     var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
     var image = {

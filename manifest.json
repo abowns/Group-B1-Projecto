@@ -13,7 +13,8 @@
     }
   },
   "sandbox": {
-    "pages" : ["map.html"]
+    "pages" : ["map.html", "chart.html"]
+    
   }
 
 }

@@ -10,8 +10,8 @@ body {
 }
 
 div.half {
-    height: 350px;
-    width: 380px;
+    height: 70vh;
+    width: 45vw;
     padding-top:3px;
     padding-right: 5px;
     padding-left: 5px;
