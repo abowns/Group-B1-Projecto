@@ -1,4 +1,3 @@
-   
 // Include the google charts api and manually bootstrap the angular
 // app defined in controller.js once the api has been loaded.
 google.load('visualization', '1', {packages: ['line']});
@@ -16,13 +15,11 @@ snowy.controller('DropDownController', ['$scope', function($scope) {
 	//give some feature options for the line chart
 		var screenWidth = window.screen.width; 
 		var screenHeight = window.screen.height; 
-		  var options = {
-        chart: {
-          title: 'Annual Snowfall at',
-          subtitle: $scope.resort
-        },
-        width: ((screenWidth/10)*7),
-        height: ((screenHeight/10)*5)
+		  var options = { 
+		  chart: {
+        	title: "Annual Snowfall"}, 
+        width: 700,
+        height: 400
       };
  
 	    // Make the initial query to get the whole Fusion table.
@@ -51,10 +48,8 @@ snowy.controller('DropDownController', ['$scope', function($scope) {
                     views[thisResort].setRows(views[thisResort].getFilteredRows([{column: 0, value: thisResort}]));
 		    views[thisResort].setColumns([2,1]);
 			
-			data1 = views[thisResort].toDataTable();
-			
 		    // Draw the chart for a single mountain
-		    $scope.chart.draw(data1, options);
+		    $scope.chart.draw(views[thisResort].toDataTable(), options);
 		});	
 
 	       		
@@ -97,11 +92,12 @@ snowy.controller('DropDownController', ['$scope', function($scope) {
 		//helps select a specific location based on the 
 		//selection
 		$scope.switch = function() {
-		$scope.resort = mtn[i];
+		var x = document.getElementById("dropdown").selectedIndex;
+		$scope.resort = mtnNames[x];
 		$scope.get(); 
 		}
 		
-		$scope.items=["alpe-dhuez", "alta-ski-area", "alyeska-resort", "breckenridge",
+		$scope.chosen=["alpe-dhuez", "alta-ski-area", "alyeska-resort", "breckenridge",
 	     "davos-klosters", "geilo", "heavenly-mountain-resort", "killington-resort", 
 	     "laax", "las-lenas", "mt-baker", "mt-hood-meadows", "vail", "valle-nevado", 
 	     "whakapapa", "whistler-blackcomb"];
@@ -121,5 +117,20 @@ snowy.controller('DropDownController', ['$scope', function($scope) {
 		$scope.resort = mtnNames[i];
 		$scope.get();
 	    };
+	    
+	    
+	    /**
+	    $scope.changeName = function(resort) {
+	    	for (i = 0; i < mtnNames.length; i++){
+	    		if (resort == mtnNames[i])
+	    		{
+	    			$scope.resort = mtnNames[i]; 
+	    			$scope.get(); 
+	    			
+	    		}
+	    	}
+	    
+	    }
+	    **/
 	   
 	}]);

@@ -32,22 +32,22 @@ function initialize() {
 //store the different mountains, their coordinates and a z value (used for overlapping icons)
 //[mtn name, N coordinate, W coordinate, z value]
 var mountains = [
-    ['Vail, CO', 39.6358, -106.3631, 1],
-    ['Breckenridge, CO', 39.4996, -106.0433, 2],
-    ['Mt-Hood, OR', 45.3289, -121.6625, 3],
-    ['Mt-Baker, WA', 48.8620, -121.6540, 4],
-    ['Whistler-Blackcomb, BC', 50.1083, -122.9425, 5],
-    ["Alpe d'Huez, France", 45.0603, 6.0714, 6],
-    ['Heavenly, CA', 38.9353, -119.9400, 7],
-    ['Whakapapa, New Zealand', -40.8167, 175.55, 8],
-    ['Killington, VT', 43.6647, -72.7933, 9],
-    ['Klosters, Switzerland', 46.8833, 9.883, 10],
-    ['Geilo, Norway', 60.5167, 8.2000, 11],
-    ['Alta, UT', 40.5808, -111.6372, 12],
-    ['Alyeska, AK', 60.9705, -149.0982, 13], 
-    ['Valle Nevado, Chile', -33.3547, -70.2498, 14],
-    ['Las Lenas, Argentina', -35.1500, -70.0833, 15],
-    ['Laax, Switzerland', 46.8000, 9.2500, 16]
+    ['vail', 39.6358, -106.3631, 1],
+    ['breckenridge', 39.4996, -106.0433, 2],
+    ['mt-hood-meadows', 45.3289, -121.6625, 3],
+    ['mt-baker', 48.8620, -121.6540, 4],
+    ['whistler-blackcomb', 50.1083, -122.9425, 5],
+    ["alpe-dhuez", 45.0603, 6.0714, 6],
+    ['heavenly-mountain-resort', 38.9353, -119.9400, 7],
+    ['whakapapa', -40.8167, 175.55, 8],
+    ['killington-resort', 43.6647, -72.7933, 9],
+    ['davos-klosters', 46.8833, 9.883, 10],
+    ['geilo', 60.5167, 8.2000, 11],
+    ['alta-ski-area', 40.5808, -111.6372, 12],
+    ['alyeska-resort', 60.9705, -149.0982, 13], 
+    ['valle-nevado', -33.3547, -70.2498, 14],
+    ['las-lenas', -35.1500, -70.0833, 15],
+    ['laax', 46.8000, 9.2500, 16]
 ];
 
 // adds markers to the map
@@ -77,11 +77,16 @@ function setMarkers(map, locations) {
             map: map,
             icon: image,
             shape: shape,
-            clickable: true,
+          //  clickable: true,
             title: mtn[0],
             zIndex: mtn[3]
         });
-    }
+   
+   /**  
+     google.maps.event.addListener(marker, 'click', function() {
+    	 $scope.changeName(title); 
+  });**/
+    }	
 }
 
 window.onload = loadScript;
