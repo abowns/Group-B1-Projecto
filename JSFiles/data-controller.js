@@ -8,16 +8,16 @@ google.setOnLoadCallback(function() {
 var snowy = angular.module('snowy',[]);
 
 snowy.controller('DropDownController', ['$scope', function($scope) {
-
+      
 	    // Create the chart that will be used to animate resort-by-resort information.
 	    $scope.chart= new google.charts.Line(document.getElementById('visualization_div'));	  
-	    			
+	    	
 	//give some feature options for the line chart
 		var screenWidth = window.screen.width; 
 		var screenHeight = window.screen.height; 
 		  var options = { 
-		  chart: {
-        	title: "Annual Snowfall"}, 
+		  chart:{
+        	title: "Annual Snowfall "}, 
         width: 700,
         height: 400
       };
@@ -52,18 +52,21 @@ snowy.controller('DropDownController', ['$scope', function($scope) {
 		    $scope.chart.draw(views[thisResort].toDataTable(), options);
 		});	
 
-	       		
+	   
+	   // *****************************************************************
+	   //	variable reference
+	   // *****************************************************************
+	   
 	    // create a table of the resort names for reference
 	    var mtnNames = ["alpe-dhuez", "alta-ski-area", "alyeska-resort", "breckenridge",
 	     "davos-klosters", "geilo", "heavenly-mountain-resort", "killington-resort", 
 	     "laax", "las-lenas", "mt-baker", "mt-hood-meadows", "vail", "valle-nevado", 
 	     "whakapapa", "whistler-blackcomb"];
 	     
-	     
 	    //beginning values help setup what the first graph is
 	    var i = 0; 
 	    $scope.resort = mtnNames[i];
-	    
+	    $scope.rName = mtnNames[i];
 
 	    // ************************************************************************
 	    // Controller functions
@@ -77,7 +80,7 @@ snowy.controller('DropDownController', ['$scope', function($scope) {
 		// If the view of data for the selected resort hasn't been created
 		// yet, create it.
 		if (views[thisResort] === undefined) {
-
+			
 		    var thisResort = $scope.resort;
                     views[thisResort] = new google.visualization.DataView(data);
                     views[thisResort].setRows(views[thisResort].getFilteredRows([{column: 0, value: thisResort}]));
@@ -85,7 +88,6 @@ snowy.controller('DropDownController', ['$scope', function($scope) {
 		}
 		// Draw the chart for selected year.
 		$scope.chart.draw(views[thisResort].toDataTable(), options);
-
 	    };
 		
 		//switch()
@@ -94,6 +96,7 @@ snowy.controller('DropDownController', ['$scope', function($scope) {
 		$scope.switch = function() {
 		var x = document.getElementById("dropdown").selectedIndex;
 		$scope.resort = mtnNames[x];
+		$scope.rName = mtnNames[x];
 		$scope.get(); 
 		}
 		
@@ -105,32 +108,48 @@ snowy.controller('DropDownController', ['$scope', function($scope) {
 	    // minus():
 	    // decrement alphabetically through the resorts
 	    $scope.minus = function() {
+	  	if (i > 0){
 	  	i--;
 		$scope.resort = mtnNames[i];
 		$scope.get();
+		}
 	    };
 
 	    // plus():
 	    // increment alphabetically through the resorts
 	    $scope.plus = function() {
+	    if (i < 15){
 	    i++;
 		$scope.resort = mtnNames[i];
 		$scope.get();
+		}
 	    };
-	    
-	    
-	    /**
-	    $scope.changeName = function(resort) {
-	    	for (i = 0; i < mtnNames.length; i++){
-	    		if (resort == mtnNames[i])
-	    		{
+	
+	    $scope.workName = function(resort) {
+	    	reload = false; 
 	    			$scope.resort = mtnNames[i]; 
 	    			$scope.get(); 
 	    			
+	    		}   
+	}]);
+	
+	 // create a table of the resort names for reference 
+	    var myNames = ["alpe-dhuez", "alta-ski-area", "alyeska-resort", "breckenridge",
+	     "davos-klosters", "geilo", "heavenly-mountain-resort", "killington-resort", 
+	     "laax", "las-lenas", "mt-baker", "mt-hood-meadows", "vail", "valle-nevado", 
+	     "whakapapa", "whistler-blackcomb"];
+	     
+	     var reload = false;
+	     //change name is called when we click on an icon, referred by view-controller.js
+changeName = function(title){
+		for (i = 0; i < myNames.length; i++){
+    		if (title == myNames[i])
+    			{
+	    			 reload =  true;
+	    			 break; 
 	    		}
 	    	}
-	    
-	    }
-	    **/
-	   
-	}]);
+}
+	
+	
+		

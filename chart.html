@@ -17,30 +17,17 @@
 
     	<div class="container"  ng-controller="DropDownController">
 	
-	<!--
-	<div class="row">
-	    <div class="col-md-12">
-              <h1>Annual Snowfall Data</h1>
-	      </div>
-	</div>
--->
 	<div google-chart chart="chartObject"></div>
 
-
+ <input type="text" class="form-control" ng-model="resort">
 	<div class="row" style="margin-left: 100px" mar>
 	  <div class="col-md-3">
 	    <div class="input-group">
 	      <span class="input-group-btn">
-	   
-	      
-	      
-	        <!--<input type="text" class="form-control" ng-model="resort"> -->
- 		<button class="btn btn-default" type="button" ng-model="resort" ng-disabled="resort<0" ng-click="minus()"><</button>
-		<button class="btn btn-default" type="button" ng-model="resort" ng-disabled="resort>15" ng-click="plus()">></button>
+ 		<button class="btn btn-default" type="button" ng-model="resort" ng-click="minus()"><</button>
+		<button class="btn btn-default" type="button" ng-model="resort" ng-click="plus()">></button>
 		<select id="dropdown" ng-model="selectedItem" ng-options="item for item in chosen"></select>
 		<button class="btn btn-default" type="button" ng-model="resort" ng-click="switch()">Go!</button>
-	      
-	     
 	      </span>
 	      </div><!-- /input-group -->
 	    </div>

@@ -77,16 +77,19 @@ function setMarkers(map, locations) {
             map: map,
             icon: image,
             shape: shape,
-          //  clickable: true,
             title: mtn[0],
             zIndex: mtn[3]
         });
    
-   /**  
      google.maps.event.addListener(marker, 'click', function() {
-    	 $scope.changeName(title); 
-  });**/
+    	// $scope.changeName(title); 
+    	 map.setZoom(8);
+    map.setCenter(marker.getPosition());
+  });
+  
     }	
+   
 }
 
+   
 window.onload = loadScript;
