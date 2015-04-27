@@ -15,7 +15,7 @@
 
     <body style="font-family: 'Open Sans', san-serif ; height: 100%; border: 0 none;">
 
-    	<div class="container"  ng-controller="DropDownController">
+    	<div id="ddController" class="container"  ng-controller="DropDownController">
 	
 	<div google-chart chart="chartObject"></div>
 
@@ -24,10 +24,12 @@
 	  <div class="col-md-3">
 	    <div class="input-group">
 	      <span class="input-group-btn">
+	  <!--  <button class="btn btn-default" type="button" ng-model="resort" ng-click="workName()">Click Me!</button>  -->
  		<button class="btn btn-default" type="button" ng-model="resort" ng-click="minus()"><</button>
 		<button class="btn btn-default" type="button" ng-model="resort" ng-click="plus()">></button>
 		<select id="dropdown" ng-model="selectedItem" ng-options="item for item in chosen"></select>
 		<button class="btn btn-default" type="button" ng-model="resort" ng-click="switch()">Go!</button>
+		
 	      </span>
 	      </div><!-- /input-group -->
 	    </div>
