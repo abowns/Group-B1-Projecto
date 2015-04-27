@@ -1,21 +1,24 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
-<title>Growing Code</title>
-
+<title>Annual Snowfall Data</title>
    <link rel="stylesheet" type="text/css" href="./CSS/format-controller.css"></link>
-   <script src ="./JSFiles/data-controller.js"></script>
-   <script src ="./JSFiles/ui.js"></script>
 </head>
 <body>
-
-  <div id="viz">
-
+  <div id="top">
+  	<div class="above">
+    <h1><center>Annual Snowfall Data</center></h1>
+    <h6><center>By: Alex Bowns, Ben Forsee, and Keegan Symmes</center></h6>
+    </div>
+  </div>
+  <div id="viz"> <center>
     <div class="half">
       <iframe id="map" src="map.html"></iframe>
     </div>
-    <div class="half" id="events">Events</div>
-
+    <div class="half">
+    	<iframe id="visualization_div" src="chart.html"	></iframe>
+    </div>
+    </center>
   </div>
 
 </body>

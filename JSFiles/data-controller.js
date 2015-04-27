@@ -1,117 +1,157 @@
-/**
- * data-controller.js
- *
- * Defines the applications functionality for fetching and transforming
- * data from the New York Times api.
- *
- *
- */
+// Include the google charts api and manually bootstrap the angular
+// app defined in controller.js once the api has been loaded.
+google.load('visualization', '1', {packages: ['line']});
+google.setOnLoadCallback(function() {
+	angular.bootstrap(document.body, ['snowy']);
+    });
 
-// Extend the namespace
-var librs = librs || {};
-librs.data = {};
+var snowy = angular.module('snowy',[]);
 
-// The intention of this approach is to be framework-agnostic
-// and to avoid namespace pollution by encapsulating the contents of 
-// this module in a function:
-librs.data = function() {
-
-    var apikey = librs.apikey.get();
-
-    // ************************************************************************
-    // Methods local to this module.
-    // ************************************************************************
-
-    /** 
-     * makeHttpObject()
-     * 
-     * Based on the example offered in Chapter 14 of Eloquent
-     * JavaScript by Marjin Haverbeke, this function is a browser
-     * agnostic and framework agnostic wrapper for creating an http
-     * object in JavaScript.
-     *
-     */
-    var makeHttpObject = function() {
-	try {return new XMLHttpRequest();}
-	catch (error) {}
-	try {return new ActiveXObject("Msxml2.XMLHTTP");}
-	catch (error) {}
-	try {return new ActiveXObject("Microsoft.XMLHTTP");}
-	catch (error) {}
-	
-	throw new Error("Could not create HTTP request object.");
-    };
-
-    // ************************************************************************
-    // Methods provided by this module, visible via the namespace.
-    // ************************************************************************
-
-    /** 
-     * request()
-     *
-     * Based on the example offered in Chapter 14 of Eloquent JavaScript by
-     * Marjin Haverbeke, this function leverages the makeHttpObject call
-     * to make an http request.
-     *
-     */
-    librs.data.request = function() {
-
-	// Make a new request.
-        var r = makeHttpObject();
-	// var r = new XMLHttpRequest;
-	if (r) {
-
-	    var apikey = librs.apikey.get();
-	    var url = "http://api.nytimes.com/svc/events/v2/listings.json?query=computer&api-key="+apikey;
-	    // Construct the details of the credentialed request and send it.
-	    r.open("GET", url, true);
-
-	    // Alter the onreadystatchange property of the object to a
-	    // function that will be called every time the state changes.
-	    // If the state is '4' -- the document has been fully loaded.
-	    r.onreadystatechange = function(evtXHR) {
-		if (r.readyState == 4){
-		    if (r.status == 200) {
+snowy.controller('DropDownController', ['$scope', function($scope) {
+      
+	    // Create the chart that will be used to animate resort-by-resort information.
+	    $scope.chart= new google.charts.Line(document.getElementById('visualization_div'));	  
+	    	
+	//give some feature options for the line chart
+		var screenWidth = window.screen.width; 
+		var screenHeight = window.screen.height; 
+		  var options = { 
+        width: screenWidth/2.1,
+        height: screenHeight*.59,
+        legend: {position:'none'},
+        hAxis: { format: ''},
+       vAxis: {title: 'Snowfall (in.)',
+        		format: 'decimal'}
+      };
+ 
+	    // Make the initial query to get the whole Fusion table.
+	    var query = "SELECT Resort, 'Annual Snowfall', Year FROM 1AoZsRLfcNALHsaHrhBxi1ZuqahhlcOCP_P6CYLJL";	    
+	    var opts = {sendMethod: 'auto'};
+	    var queryObj = new google.visualization.Query('https://www.google.com/fusiontables/gvizdata?tq=');
+	       
+	    
+	    // Define the variables to hold the entire fusion table,
+	    // and a collection of views, one for each resort.
+	    var data;
+	    var views = {};
+	   
+	    
+	    // Send the query and handle the response by creating and
+	    // drawing the data for a resort
+	    queryObj.setQuery(query);
+	    queryObj.send(function(e) { 
+		    
+		    data = e.getDataTable();
+		    
+		 	 //   Create a view for resort (column[0]) that takes in the year (column[2]) 
+		    // and the snowfall (column[1]) as parameters.
+		    var thisResort = $scope.resort;
+                    views[thisResort] = new google.visualization.DataView(data);
+                    views[thisResort].setRows(views[thisResort].getFilteredRows([{column: 0, value: thisResort}]));
+		    views[thisResort].setColumns([2,1]);
 			
-			// Convert the string response into JSON
-			// format.
-			var j = JSON.parse(r.responseText);
+		    // Draw the chart for a single mountain
+		    $scope.chart.draw(views[thisResort].toDataTable(), google.charts.Line.convertOptions(options));
+		});	
+
+	   
+	   // *****************************************************************
+	   //	variable reference
+	   // *****************************************************************
+	   
+	    // create a table of the resort names for reference
+	    var mtnNames = ["alpe-dhuez", "alta-ski-area", "alyeska-resort", "breckenridge",
+	     "davos-klosters", "geilo", "heavenly-mountain-resort", "killington-resort", 
+	     "laax", "las-lenas", "mt-baker", "mt-hood-meadows", "vail", "valle-nevado", 
+	     "whakapapa", "whistler-blackcomb"];
+	     
+	    //beginning values help setup what the first graph is
+	    var i = 0; 
+	    $scope.resort = mtnNames[i];
+	    $scope.rName = mtnNames[i];
+		
+	    // ************************************************************************
+	    // Controller functions
+	    // ************************************************************************
+
+
+	    // get()
+	    //    Get a new chart.
+	    $scope.get = function() {
+
+		// If the view of data for the selected resort hasn't been created
+		// yet, create it.
+		if (views[$scope.resort] === undefined) {
 			
-			console.log(j);
-
-			list = {};
-			
-			// Create a list of events and names.
-			for(var i = 0; i < j["num_results"]; i++) {
-			        
-			    list[i] = {};
-
-			    // Extract the event name and url from the
-			    // JSON object received from the server.
-			    list[i].name = j.results[i]["event_name"];
-			    list[i].url = j.results[i]["event_detail_url"];
-			}
-
-			// List the events on the UI.
-			librs.ui.listEvents(list, j["num_results"]);
-
-			// Send a message to the map.
-			var message = {
-			    command: 'render'
-			}
-			
-			document.getElementById('map').contentWindow.postMessage(message, '*');
-
-
-		    }
+		    var thisResort = $scope.resort;
+                    views[thisResort] = new google.visualization.DataView(data);
+                    views[thisResort].setRows(views[thisResort].getFilteredRows([{column: 0, value: thisResort}]));
+                    views[thisResort].setColumns([2, 1]);
 		}
-	    }
-	    r.send();
-	}
-    };
+		// Draw the chart for selected year.
+		$scope.chart.draw(views[$scope.resort].toDataTable(), google.charts.Line.convertOptions(options));
+	    };
+		
+		//switch()
+		//helps select a specific location based on the 
+		//selection
+		$scope.switch = function() {
+		var x = document.getElementById("dropdown").selectedIndex;
+		$scope.resort = mtnNames[x];
+		$scope.rName = mtnNames[x];
+		$scope.get(); 
+		}
+		
+		$scope.chosen=["alpe-dhuez", "alta-ski-area", "alyeska-resort", "breckenridge",
+	     "davos-klosters", "geilo", "heavenly-mountain-resort", "killington-resort", 
+	     "laax", "las-lenas", "mt-baker", "mt-hood-meadows", "vail", "valle-nevado", 
+	     "whakapapa", "whistler-blackcomb"];
+		
+	    // minus():
+	    // decrement alphabetically through the resorts
+	    $scope.minus = function() {
+	  	if (i > 0){
+	  	i--;
+		$scope.resort = mtnNames[i];
+		$scope.get();
+		}
+	    };
 
-    
-}; // end lbrs.data-ctrl module
-
-// Invoke module.
-librs.data();
+	    // plus():
+	    // increment alphabetically through the resorts
+	    $scope.plus = function() {
+	    if (i < 15){
+	    i++;
+		$scope.resort = mtnNames[i];
+		$scope.get();
+		}
+	    };
+	
+	    $scope.workName = function() {
+	    	//reload = false; 
+	    $scope.resort = selected; 
+	    $scope.get(); 
+	    			
+	    		};
+	    		
+	}]);
+	
+	 // create a table of the resort names for reference 
+	    var myNames = ["alpe-dhuez", "alta-ski-area", "alyeska-resort", "breckenridge",
+	     "davos-klosters", "geilo", "heavenly-mountain-resort", "killington-resort", 
+	     "laax", "las-lenas", "mt-baker", "mt-hood-meadows", "vail", "valle-nevado", 
+	     "whakapapa", "whistler-blackcomb"];
+	     
+	    var selected = "";
+	     //change name is called when we click on an icon, referred by view-controller.js
+changeName = function(title1){
+	//	for (i = 0; i < myNames.length; i++){
+    //		if (title == myNames[i])
+    //			{
+	    			 selected = title1; 
+	  //  		}
+	    //	}
+}
+	
+	
+		
