@@ -33,6 +33,7 @@ function initialize() {
          marker[q] = new google.maps.Marker({
             position: myLatLng,
             map: map,
+            icon: image, 
             title: mtn[0],
             zIndex: mtn[3]
         });
@@ -69,5 +70,12 @@ var mountains = [
     ['las-lenas', -35.1500, -70.0833, 15],
     ['laax', 46.8000, 9.2500, 16]
 ];
-
+ //upload a custom (snowflake) map icon
+    var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+    var image = {
+        url: iconBase + 'snowflake_simple.png',
+        size: new google.maps.Size(64, 64),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(0, 64)
+    };
 google.maps.event.addDomListener(window, 'load', initialize);

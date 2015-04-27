@@ -16,16 +16,18 @@ snowy.controller('DropDownController', ['$scope', function($scope) {
 		var screenWidth = window.screen.width; 
 		var screenHeight = window.screen.height; 
 		  var options = { 
-		  chart:{
-        	title: "Annual Snowfall "}, 
-        width: 700,
-        height: 400
+        width: screenWidth/2.1,
+        height: 400,
+        legend: {position:'none'},
+        hAxis: { format: ''},
+       vAxis: {title: 'Snowfall (in.)',
+        		format: 'decimal'}
       };
  
 	    // Make the initial query to get the whole Fusion table.
 	    var query = "SELECT Resort, 'Annual Snowfall', Year FROM 1AoZsRLfcNALHsaHrhBxi1ZuqahhlcOCP_P6CYLJL";	    
 	    var opts = {sendMethod: 'auto'};
-	    var queryObj = new google.visualization.Query('https://www.google.com/fusiontables/gvizdata?tq=', opts);
+	    var queryObj = new google.visualization.Query('https://www.google.com/fusiontables/gvizdata?tq=');
 	       
 	    
 	    // Define the variables to hold the entire fusion table,
@@ -35,7 +37,7 @@ snowy.controller('DropDownController', ['$scope', function($scope) {
 	   
 	    
 	    // Send the query and handle the response by creating and
-	    // drawing the data for 2014.
+	    // drawing the data for a resort
 	    queryObj.setQuery(query);
 	    queryObj.send(function(e) { 
 		    
@@ -49,7 +51,7 @@ snowy.controller('DropDownController', ['$scope', function($scope) {
 		    views[thisResort].setColumns([2,1]);
 			
 		    // Draw the chart for a single mountain
-		    $scope.chart.draw(views[thisResort].toDataTable(), options);
+		    $scope.chart.draw(views[thisResort].toDataTable(), google.charts.Line.convertOptions(options));
 		});	
 
 	   
@@ -87,7 +89,7 @@ snowy.controller('DropDownController', ['$scope', function($scope) {
                     views[thisResort].setColumns([2, 1]);
 		}
 		// Draw the chart for selected year.
-		$scope.chart.draw(views[thisResort].toDataTable(), options);
+		$scope.chart.draw(views[thisResort].toDataTable(), google.charts.Line.convertOptions(options));
 	    };
 		
 		//switch()
@@ -146,7 +148,7 @@ changeName = function(title){
     		if (title == myNames[i])
     			{
 	    			 reload =  true;
-	    			 break; 
+	    			angular.element(document.getElementById('visualization_div')).scope().WorkName();
 	    		}
 	    	}
 }
