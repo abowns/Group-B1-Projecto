@@ -4,7 +4,7 @@ An interactive visualization of changes in annual snowfall at different location
 # Installation 
 Download zipfile.
 Open google chrome.
-Open snowParty.html in browser. 
+Open window.html in browser. 
 Check out our interactive map displaying different snow record stations around the world!
 
 # Contrubutors
